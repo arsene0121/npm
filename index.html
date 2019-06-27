@@ -7,13 +7,122 @@
 	<title>My First Vue Project</title>
 </head>
 <body>
+	<div>
+		https://cn.vuejs.org/v2/guide/index.html
+	</div>
+	
+	<div id="app-1">
+		{{ message }}
+	</div>
+	
+	<div id="app-2">
+		<span v-bind:title="title">
+			mouse hover here!!
+		</span>
+	</div>
+	
+	<div id="app-3">
+		<p v-if="!seen">現在你看到我了!!</p>
+		<button v-on:click="btn1Click">click</button>
+	</div>
+	
+	<div id="app-4">
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+	</div>
+	
+	<div id="app-5">
+		<p>{{ message }}</p>
+		<input v-model="message" />
+		<button v-on:click="reverseMessage">逆轉訊息</button>
+	</div>
+	
+	<div id="app-7">
+		<ol>
+			<todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+		</ol>
+	</div>
+	
 	<script src="node_modules/jquery/dist/jquery.min.js" charset="utf-8"></script>
+	<script src="node_modules/vue/dist/vue.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("body").append("<h1>Use NPM</h1>");
-			$("body").append("<div>Install jQuery</div>");
+			$("body").append("<div>Install jQuery<br /><small>npm install jquery --save</small></div>");
+			$("body").append("<div>Install Vue<br /><small>npm install vue --save</small></div>");
 			$("body").css("background-color", "pink");
 		});
+		
+		var app1 = new Vue({
+			el: "#app-1",
+			data: {
+				message: "Hellow Vue!!"
+			}
+		})
+		
+		var app2 = new Vue({
+			el: "#app-2",
+			data: {
+				title: "頁面加載於" + new Date().toLocaleString()
+			}
+		})
+		
+		var app3 = new Vue({
+			el: "#app-3",
+			data:{
+				seen: true
+			},
+			methods: {
+				btn1Click: function(){
+					this.seen = !this.seen
+				}
+			}
+		})
+		
+		var app4 = new Vue({
+			el: "#app-4",
+			data: {
+				todos: [
+					{ text: "學習JavaScript" },
+					{ text: "學習Vue" },
+					{ text: "整個項目" }
+				]
+			}
+		})
+		
+		var app5 = new Vue({
+			el: "#app-5",
+			data: {
+				message: "this is a book!"
+			},
+			methods: {
+				reverseMessage: function(){
+					this.message = this.message.split("").reverse().join("")
+				}
+			}
+		})
+		
+		Vue.component("todo-item", {
+			props: ["todo"],
+			template: "<li>{{ todo.text }}</li>"
+		})
+		
+		var app7 = new Vue({
+			el: "#app-7",
+			data: {
+				groceryList:[
+					{id:0, text:"香蕉"},
+					{id:1, text:"芭樂"},
+					{id:2, text:"隨便其它什麼吃的東西"}
+				]
+			}
+		})
+		
+		
 	</script>
+	
 </body>
 </html>
